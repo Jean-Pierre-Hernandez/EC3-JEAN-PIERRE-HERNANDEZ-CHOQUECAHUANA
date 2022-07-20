@@ -2,12 +2,15 @@ package com.idat.EC3JEANPIERREHERNANDEZCHOQUECAHUANACITA.model;
 
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+
 
 @Entity
 @Table(name = "usuarios_clientes")
@@ -20,9 +23,13 @@ public class UsuarioCliente {
 	private String password;
 	private String rol;
 	
-	@OneToOne(mappedBy = "usuariocliente")
+	@OneToOne
+	@JoinColumn(
+			name = "id_cliente", 
+			nullable = false, 
+			unique = true, 
+			foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_cliente) references clientes(id_cliente)"))
 	private Cliente cliente;
-
 	/**
 	 * @return the idUsuario
 	 */
@@ -30,26 +37,21 @@ public class UsuarioCliente {
 		return idUsuario;
 	}
 
-	/**
-	 * @param idUsuario the idUsuario to set
-	 */
-	public void setIdUsuario(Integer idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-	/**
-	 * @return the usuario
-	 */
+	
 	public String getUsuario() {
 		return usuario;
 	}
 
-	/**
-	 * @param usuario the usuario to set
-	 */
+
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+
+
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
 
 	/**
 	 * @return the password
