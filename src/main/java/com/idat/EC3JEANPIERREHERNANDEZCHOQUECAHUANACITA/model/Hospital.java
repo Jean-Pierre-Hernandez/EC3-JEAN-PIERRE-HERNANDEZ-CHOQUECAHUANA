@@ -1,13 +1,20 @@
 package com.idat.EC3JEANPIERREHERNANDEZCHOQUECAHUANACITA.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 
 @Entity
@@ -22,15 +29,26 @@ public class Hospital {
 	private String distrito;
 	
 	
-	@ManyToOne
-	@JoinColumn(
-			name = "id_cliente",
-			nullable = false,
-			unique = true,
-			foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (id_cliente) references clientes(id_cliente)")
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(
+			name = "hospitales_clientes",
+			joinColumns = @JoinColumn(
+					name = "id_hospital", 
+					nullable = false, 
+					unique = true, 
+					foreignKey = @ForeignKey(foreignKeyDefinition = 
+			"foreign key (id_hospital) references hospitales(id_hospital)")
+			),
+			inverseJoinColumns = @JoinColumn(
+					name = "id_cliente", 
+					nullable = false, 
+					unique = true, 
+					foreignKey = @ForeignKey(foreignKeyDefinition = 
+			"foreign key (id_cliente) references clientes(id_cliente)")
 			)
-	
-	private Cliente cliente;
+				
+	)	
+	private List<Cliente> clientes = new ArrayList<>();
 
 	public Integer getIdHospital() {
 		return idHospital;
@@ -64,13 +82,7 @@ public class Hospital {
 		this.distrito = distrito;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
 	
 	
 			
