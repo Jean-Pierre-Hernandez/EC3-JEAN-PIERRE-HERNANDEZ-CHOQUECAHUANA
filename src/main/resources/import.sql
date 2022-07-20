@@ -1,1 +1,0 @@
-insert into usuarios_clientes (usuario,password,rol) values ('jean','jean','ESTUDIANTE')
