@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -23,8 +24,12 @@ public class Cliente {
 	private String nombre;
 	private String celular;
 	
-	@ManyToMany(mappedBy = "cliente",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy = "clientes",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Hospital> hospitales = new ArrayList<>();
+	
+	@OneToOne(mappedBy = "cliente")
+	private UsuarioCliente usuarioCliente;
+
 
 	public Integer getIdCliente() {
 		return idCliente;
@@ -60,3 +65,4 @@ public class Cliente {
 	
 	
 }
+
