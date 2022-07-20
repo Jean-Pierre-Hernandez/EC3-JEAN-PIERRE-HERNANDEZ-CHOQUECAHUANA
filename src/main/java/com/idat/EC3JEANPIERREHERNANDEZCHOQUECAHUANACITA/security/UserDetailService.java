@@ -24,19 +24,19 @@ public class UserDetailService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		UsuarioCliente usuariocliente = repository.findByUsuarioCliente(username);
+		//UsuarioCliente usuariocliente = repository.findByUsuarioCliente(username);
 		
-		if(usuariocliente != null){
+		if("profesor".equals(username)){
 			
 			List<GrantedAuthority> listGranted = new ArrayList<>();
-			GrantedAuthority granted = new SimpleGrantedAuthority(usuariocliente.getRol());
+			//GrantedAuthority granted = new SimpleGrantedAuthority(usuariocliente.getRol());
 			
-			listGranted.add(granted);
+			//listGranted.add(granted);
 			
-			return new User(usuariocliente.getUsuario(),usuariocliente.getPassword() , listGranted);
+			return new User("profesor", "123456", listGranted);
 			
 			
 		}else
-			throw new UsernameNotFoundException("Usuario no existe " + usuariocliente);
+			throw new UsernameNotFoundException("Usuario no existe ");
 	}
 }
